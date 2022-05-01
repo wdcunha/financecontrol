@@ -7,17 +7,16 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Embeddable
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "purchase")
 public class PurchaseProductPk implements Serializable {
     
     private static final long serialVersionUID = 476151177562655457L;
         
     @ManyToOne(optional = false, fetch=FetchType.LAZY)
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase")
+    @JsonManagedReference
     private Purchases purchase;
         
     @ManyToOne(optional = false, fetch=FetchType.LAZY)

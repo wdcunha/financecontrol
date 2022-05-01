@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 
 
 @RestController
-@RequestMapping("/api/persontypes")
+@RequestMapping("/api/person-types")
 @AllArgsConstructor
 public class PersonTypesController {
     

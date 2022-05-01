@@ -1,31 +1,31 @@
 package com.gswf.financecontrol.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Data
 @Entity
 @Table(name = "person")
-public class Person implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
+public class Person {
 
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "person-seq")
     @GenericGenerator(name = "person-seq", strategy = "native")
@@ -44,12 +44,15 @@ public class Person implements Serializable {
     private String email;
     
     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "type")
+    @JsonManagedReference
     private PersonTypes type;
     
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "store")
+    @OneToMany(mappedBy = "store")
     @JsonIgnore
     private List<Purchases> purchases;
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "client")
+
+    @OneToMany(mappedBy = "client")
     @JsonIgnore
     private List<Sales> sales;
 }

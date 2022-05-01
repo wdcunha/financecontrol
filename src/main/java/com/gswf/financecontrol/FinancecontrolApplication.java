@@ -157,10 +157,19 @@ public class FinancecontrolApplication {
 			store.setPhone("+556233523456");
 			store.setAddress("Bernardo Sayão, Fama");
 
+			Person store2 = new Person();
+			store2.setType(personTypes2);
+			store2.setName("Unica");
+			store2.setNumDoc("00.321.654-87");
+			store2.setEmail("client@unica.com");
+			store2.setPhone("+556232231234");
+			store2.setAddress("Av. Goiás, Criméia");
+
 			List<Person> people = new ArrayList<>();
 			people.add(client);
 			people.add(seller);
 			people.add(store);
+			people.add(store2);
 
 			personService.saveAllPeople(people);
 
@@ -186,27 +195,40 @@ public class FinancecontrolApplication {
 			purchases.setTotalPrice(1000.10);
 			purchases.setOccurenceDate(LocalDate.of(2022,02,20));
 			purchases.setNotes("Teste de entrada inicial de dados no bd");
+			
+			Purchases purchases2 = new Purchases();
+			purchases2.setStore(store2);
+			purchases2.setTotalPrice(3050.88);
+			purchases2.setOccurenceDate(LocalDate.of(2022,04,11));
+			purchases2.setNotes("Testa outra compra");
 
 			List<Purchases> purchasesList = new ArrayList<>();
 			purchasesList.add(purchases);
+			purchasesList.add(purchases2);
 
 			purchasesService.saveAllPurchases(purchasesList);		
 			
 			PurchaseProduct purchaseProduct = new PurchaseProduct(purchases, productForPurchase, 21);
 			PurchaseProduct purchaseProduct2 = new PurchaseProduct(purchases, productForPurchase2, 13);
+			PurchaseProduct purchaseProduct3 = new PurchaseProduct(purchases2, product3, 45);
+			PurchaseProduct purchaseProduct4 = new PurchaseProduct(purchases2, product5, 50);
 
 			List<PurchaseProduct> purchaseProducts = new ArrayList<>();
 			purchaseProducts.add(purchaseProduct);
 			purchaseProducts.add(purchaseProduct2);
+			purchaseProducts.add(purchaseProduct3);
+			purchaseProducts.add(purchaseProduct4);
 
 			purchaseProductService.saveAllPurchaseProduct(purchaseProducts);
 
 			PurchasePayment purchasePayment = new PurchasePayment(purchases, payTypes, 1, 500.10);
-			PurchasePayment purchasePayment2 = new PurchasePayment(purchases, payTypes2, 5, 500.00);
+			PurchasePayment purchasePayment2 = new PurchasePayment(purchases, payTypes2, 5, 2300.00);
+			PurchasePayment purchasePayment3 = new PurchasePayment(purchases, payTypes3, 3, 1720.45);
 
 			List<PurchasePayment> purchasePayments = new ArrayList<>();
 			purchasePayments.add(purchasePayment);
 			purchasePayments.add(purchasePayment2);
+			purchasePayments.add(purchasePayment3);
 
 			purchasePaymentService.saveAllPurchasePayment(purchasePayments);
 
@@ -242,23 +264,6 @@ public class FinancecontrolApplication {
 			}
 			System.out.println(fetchpps);
 
-
-			for (int i = 0; i < pp.size(); i++) {
-
-				// Product prod = productService.findProductById(pp.get(i).getPk().getProduct().getId());
-				// Purchases purch = purchasesService.findPurchasesById(pp.get(i).getPk().getPurchase().getId());
-
-				// pp.get(i).getPk().setProduct(product);
-				// pp.get(i).getPk().setPurchase(purch);
-				
-				// System.out.println("purchase/product qtd: " + pp.get(i).getQuantity());
-				// // System.out.println("purchase product qtd: " + p.getProduct().getId());
-				// System.out.println("product id: " + pp.get(i).getPk().getProduct().getId());
-				// System.out.println("purchase id: " + pp.get(i).getPk().getPurchase().getId());
-				// // System.out.println("product id: " + p.getPk().getProduct().getDescription());
-				// System.out.println("purchase product qtd: " + prod.getDescription());
-				// // System.out.println("purchase product qtd: " + p.getProduct().getDescription());
-			}
 		};
 	}
 }
