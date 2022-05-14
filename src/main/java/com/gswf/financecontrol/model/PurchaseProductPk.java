@@ -7,22 +7,21 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Embeddable
 public class PurchaseProductPk implements Serializable {
-    
-    private static final long serialVersionUID = 476151177562655457L;
-        
-    @ManyToOne(optional = false, fetch=FetchType.LAZY)
+    private static final long serialVersionUID = 1L;
+
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "purchase")
-    @JsonManagedReference
     private Purchases purchase;
-        
-    @ManyToOne(optional = false, fetch=FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "product")
     private Product product;
 
+    @JsonBackReference
     public Purchases getPurchase() {
         return this.purchase;
     }
@@ -31,6 +30,7 @@ public class PurchaseProductPk implements Serializable {
         this.purchase = purchase;
     }
 
+    @JsonBackReference
     public Product getProduct() {
         return this.product;
     }
@@ -49,50 +49,23 @@ public class PurchaseProductPk implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-
-        result = prime * result + ((purchase.getId() == null)
-          ? 0
-          : purchase
-            .getId()
-            .hashCode());
-        result = prime * result + ((product.getId() == null)
-          ? 0
-          : product
-            .getId()
-            .hashCode());
-
+        int result;
+        result = (purchase != null ? purchase.hashCode() : 0);
+        result = 31 * result + (product != null ? product.hashCode() : 0);
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        PurchaseProductPk other = (PurchaseProductPk) obj;
-        if (purchase == null) {
-            if (other.purchase != null) {
-                return false;
-            }
-        } else if (!purchase.equals(other.purchase)) {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        if (product == null) {
-            if (other.product != null) {
-                return false;
-            }
-        } else if (!product.equals(other.product)) {
+        PurchaseProductPk that = (PurchaseProductPk) obj;
+
+        if (purchase != null ? !purchase.equals(that.purchase) : that.purchase != null) 
             return false;
-        }
+        if (product != null ? !product.equals(that.product) : that.product != null)
+            return false;
 
         return true;
     }

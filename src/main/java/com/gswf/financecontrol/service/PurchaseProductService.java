@@ -10,8 +10,14 @@ import org.springframework.validation.annotation.Validated;
 public interface PurchaseProductService {
       
     List<PurchaseProduct> getAllPurchaseProduct();
+
+    List<PurchaseProduct> getAllPurchaseByPurchaseId(int id);
   
     List<PurchaseProduct> saveAllPurchaseProduct(List<PurchaseProduct> purchaseProduct);
 
     void deleteAllPurchaseProduct();
+
+    List<PurchaseProduct> fillFullPPFromAll();
+
+    List<PurchaseProduct> fillFullPPFromList(int id);
 }

@@ -13,6 +13,5 @@ public class PurchaseProductDto {
     private Purchases purchase;
     private Product product;
     private Integer quantity;
-    
 
 }

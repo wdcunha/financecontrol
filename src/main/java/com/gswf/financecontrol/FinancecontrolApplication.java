@@ -116,6 +116,10 @@ public class FinancecontrolApplication {
 			productsForAll.add(productForSales);
 			productsForAll.add(productForPurchase);
 			productsForAll.add(productForPurchase2);
+						
+			List<Product> productsForAll2 = new ArrayList<>();
+			productsForAll2.add(product2);
+			productsForAll2.add(product5);
 
 			productService.saveAllProduct(productsForAll);
 
@@ -190,14 +194,24 @@ public class FinancecontrolApplication {
 
 			paymentTypesService.saveAllPaymentTypes(payTypesListAll);
 			
+			List<PaymentTypes> payTypesList = new ArrayList<>();
+			payTypesList.add(payTypes);
+			payTypesList.add(payTypes2);
+			
+			List<PaymentTypes> payTypesList2 = new ArrayList<>();
+			payTypesList2.add(payTypes);
+			payTypesList2.add(payTypes2);
+
 			Purchases purchases = new Purchases();
 			purchases.setStore(store);
+			purchases.setPaymentsx(payTypesList);
 			purchases.setTotalPrice(1000.10);
 			purchases.setOccurenceDate(LocalDate.of(2022,02,20));
 			purchases.setNotes("Teste de entrada inicial de dados no bd");
 			
 			Purchases purchases2 = new Purchases();
 			purchases2.setStore(store2);
+			purchases2.setPaymentsx(payTypesList2);
 			purchases2.setTotalPrice(3050.88);
 			purchases2.setOccurenceDate(LocalDate.of(2022,04,11));
 			purchases2.setNotes("Testa outra compra");
@@ -208,10 +222,35 @@ public class FinancecontrolApplication {
 
 			purchasesService.saveAllPurchases(purchasesList);		
 			
-			PurchaseProduct purchaseProduct = new PurchaseProduct(purchases, productForPurchase, 21);
-			PurchaseProduct purchaseProduct2 = new PurchaseProduct(purchases, productForPurchase2, 13);
-			PurchaseProduct purchaseProduct3 = new PurchaseProduct(purchases2, product3, 45);
-			PurchaseProduct purchaseProduct4 = new PurchaseProduct(purchases2, product5, 50);
+			PurchaseProduct purchaseProduct = new PurchaseProduct();
+			purchaseProduct.setQuantity(21);
+			purchaseProduct.setPurchase(purchases);
+			purchaseProduct.setProduct(productForPurchase);
+			purchaseProduct.setPrice(235.00);
+
+			PurchaseProduct purchaseProduct2 = new PurchaseProduct();
+			purchaseProduct2.setQuantity(12);
+			purchaseProduct2.setPurchase(purchases);
+			purchaseProduct2.setProduct(productForPurchase2);
+			purchaseProduct2.setPrice(18.28);
+
+			purchases.getPurchaseProducts().add(purchaseProduct);
+			purchases.getPurchaseProducts().add(purchaseProduct2);
+
+			PurchaseProduct purchaseProduct3 = new PurchaseProduct();
+			purchaseProduct3.setQuantity(45);
+			purchaseProduct3.setPurchase(purchases2);
+			purchaseProduct3.setProduct(product3);
+			purchaseProduct3.setPrice(18.29);
+
+			PurchaseProduct purchaseProduct4 = new PurchaseProduct();
+			purchaseProduct4.setQuantity(50);
+			purchaseProduct4.setPurchase(purchases2);
+			purchaseProduct4.setProduct(product5);
+			purchaseProduct4.setPrice(21.33);
+
+			purchases2.getPurchaseProducts().add(purchaseProduct3);
+			purchases2.getPurchaseProducts().add(purchaseProduct4);
 
 			List<PurchaseProduct> purchaseProducts = new ArrayList<>();
 			purchaseProducts.add(purchaseProduct);
@@ -233,36 +272,57 @@ public class FinancecontrolApplication {
 			purchasePaymentService.saveAllPurchasePayment(purchasePayments);
 
 			Sales sales = new Sales();
-			sales.setProductSale(product2);
 			sales.setClient(client);
 			sales.setQuantity(2);
 			sales.setTotalPrice(2000.20);
 			sales.setSaleDate(LocalDate.of(2022,03,28));
 			sales.setNotes("teste de venda");
+			sales.setProducts(productsForAll);
+
+			// productForSales.getSaled().setId(sales.getId());
+
+			// sales.getProducts().add(product);
+			// sales.getProducts().add(product3);
+			// sales.getProducts().add(product5);
+			// sales.getProducts().add(product4);
 
 			List<Sales> salesList = new ArrayList<>();
 			salesList.add(sales);
 
 			salesService.saveAllPurchases(salesList);
 
-			List<PurchaseProduct> pp = purchaseProductService.getAllPurchaseProduct();
+		// 	List<PurchaseProduct> pp = purchaseProductService.getAllPurchaseProduct();
 
-			// pp.forEach(p -> {
-			// 	Product prod = productService.findProductById(p.getPk().getProduct().getId());
-			// });
-			PurchaseProduct fetchpp = new PurchaseProduct();
-			List<PurchaseProduct> fetchpps = new ArrayList<>();
+		// 	// pp.forEach(p -> {
+		// 	// 	Product prod = productService.findProductById(p.getPk().getProduct().getId());
+		// 	// });
+		// 	PurchaseProduct fetchpp = new PurchaseProduct();
+		// 	List<PurchaseProduct> fetchpps = new ArrayList<>();
 
-			for (PurchaseProduct p : pp) {
-				System.out.println("pk product id: " + p.getPk().getProduct().getId());
-				Product prod = productService.findProductById(p.getPk().getProduct().getId());
-				Purchases purch = purchasesService.findPurchasesById(p.getPk().getPurchase().getId());
-				p.getPk().setProduct(prod);
-				p.getPk().setPurchase(purch);
-				fetchpps.add(p);
-				System.out.println(p.getProduct().getId());
-			}
-			System.out.println(fetchpps);
+		// 	for (PurchaseProduct p : pp) {
+		// 		// System.out.println("pk product id: " + p.getPk().getProduct().getId());
+		// 		// Product prod = productService.findProductById(p.getPk().getProduct().getId());
+		// 		// Purchases purch = purchasesService.findPurchasesById(p.getPk().getPurchase().getId());
+		// 		// p.getPk().setProduct(prod);
+		// 		// p.getPk().setPurchase(purch);
+		// 		// fetchpps.add(p);
+		// 		// System.out.println(p.getProduct().getId());
+		// 	}
+
+		// 	fetchpps = purchaseProductService.getAllPurchaseByPurchaseId(2);
+		// 	System.out.println(fetchpps);
+
+		// 	List<Purchases> purch = purchasesService.getAllPurchases();
+
+		// 	int count = 0;
+
+		// 	for (Purchases p : purch) {
+		// 		// List<PurchaseProduct> pps = purchaseProductService.fillFullPPFromList(p.getId().intValue());
+				
+		// 		// purch.get(count).setPurchaseProducts(pps);
+
+		// 	}
+		// 	// System.out.println(purch);
 
 		};
 	}

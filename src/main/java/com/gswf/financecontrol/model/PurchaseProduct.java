@@ -1,48 +1,33 @@
 package com.gswf.financecontrol.model;
 
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@NoArgsConstructor
 @Table(name = "purchase_product")
+@AssociationOverrides({
+    @AssociationOverride(name = "pk.purchase", joinColumns = @JoinColumn(name = "purchase_id")),
+    @AssociationOverride(name = "pk.product", joinColumns = @JoinColumn(name = "product_id")) })
 public class PurchaseProduct {
 
     @EmbeddedId
-    @JsonIgnore
-    private PurchaseProductPk pk;
+    private PurchaseProductPk pk = new PurchaseProductPk();
 
     @Column(length = 5, nullable = false)
     private Integer quantity;
 
-    public PurchaseProduct(Purchases purchase, Product product, Integer quantity) {
-        pk = new PurchaseProductPk();
-        pk.setPurchase(purchase);
-        pk.setProduct(product);
-        this.quantity = quantity;
-    }
+    @Column(length = 5, nullable = false)
+    private Double price;
 
-    @Transient
-    public Product getProduct() {
-        return this.pk.getProduct();
-    }
-
-    @Transient
-    public Purchases getPurchase() {
-        return this.pk.getPurchase();
-    }
-
-    @Transient
-    public Double getTotalPrice() {
-        return getProduct().getPrice() * getQuantity();
-    }
+    public PurchaseProduct() {}
 
     public PurchaseProductPk getPk() {
         return this.pk;
@@ -50,6 +35,30 @@ public class PurchaseProduct {
 
     public void setPk(PurchaseProductPk pk) {
         this.pk = pk;
+    }
+
+    @Transient
+    public Product getProduct() {
+        return this.getPk().getProduct();
+    }
+
+	public void setProduct(Product product) {
+		getPk().setProduct(product);
+	}
+
+    @Transient
+    @JsonBackReference
+    public Purchases getPurchase() {
+        return this.getPk().getPurchase();
+    }
+
+	public void setPurchase(Purchases purchase) {
+		getPk().setPurchase(purchase);
+	}
+
+    @Transient
+    public Double getTotalPrice() {
+        return getProduct().getPrice() * getQuantity();
     }
 
     public Integer getQuantity() {
@@ -60,13 +69,17 @@ public class PurchaseProduct {
         this.quantity = quantity;
     }
 
+    public double getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((pk == null) ? 0 : pk.hashCode());
-
-        return result;
+		return (getPk() != null ? getPk().hashCode() : 0);
     }
 
     @Override

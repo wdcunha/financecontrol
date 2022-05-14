@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.gswf.financecontrol.model.Purchases;
+import com.gswf.financecontrol.service.PurchaseProductService;
 import com.gswf.financecontrol.service.PurchasesService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +22,17 @@ public class PurchasesController {
     
     @Resource
     private final PurchasesService purchasesService;
+    
+    @Resource
+    private final PurchaseProductService ppService;
 
     @GetMapping(value = {"", "/"})
     public List<Purchases> getAllPurchases() {
+        return purchasesService.getAllPurchases();
+    }
+
+    @GetMapping(value = {"", "/full"})
+    public List<Purchases> getAllPurchasesFull() {
         return purchasesService.getAllPurchases();
     }
 

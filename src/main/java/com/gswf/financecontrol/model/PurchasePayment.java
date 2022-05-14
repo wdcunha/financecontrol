@@ -21,11 +21,11 @@ public class PurchasePayment {
     private PurchasePaymentPk pk;
         
     @ManyToOne(fetch=FetchType.LAZY)
-    @MapsId("purchaseId")
+    @MapsId("id")
     private Purchases purchase;
         
     @ManyToOne(fetch=FetchType.LAZY)
-    @MapsId("paymentId")
+    @MapsId("id")
     private PaymentTypes payment;
 
     @Column(length = 5)
