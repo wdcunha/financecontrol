@@ -22,30 +22,30 @@ import org.hibernate.annotations.GenericGenerator;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "payment_types")
-public class PaymentTypes implements Serializable {
+@Table(name = "business_types")
+public class BusinessTypes implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "pay_type_seq")
-    @GenericGenerator(name = "pay_type_seq", strategy = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "business_type_seq")
+    @GenericGenerator(name = "business_type_seq", strategy = "native")
     private Long id;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 10, nullable = false)
     private String description;
         
-    @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER, mappedBy = "pk.payment")
-    private List<BusinessPayment> businessed = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER, mappedBy = "businessType")
+    @JsonIgnore
+    private List<Business> business = new ArrayList<>();
 
-
-    public PaymentTypes() {
+    public BusinessTypes() {
     }
 
-    public PaymentTypes(Long id, String description, List<BusinessPayment> business) {
+    public BusinessTypes(Long id, String description, List<Business> business) {
         this.id = id;
         this.description = description;
-        this.businessed = business;
+        this.business = business;
     }
 
     public Long getId() {
@@ -65,12 +65,12 @@ public class PaymentTypes implements Serializable {
     }
 
     @JsonIgnore
-    public List<BusinessPayment> getBusiness() {
-        return this.businessed;
+    public List<Business> getBusiness() {
+        return this.business;
     }
 
-    public void setBusiness(List<BusinessPayment> business) {
-        this.businessed = business;
+    public void setBusiness(List<Business> business) {
+        this.business = business;
     }
 
     @Override
@@ -80,15 +80,15 @@ public class PaymentTypes implements Serializable {
         if (!(o instanceof PaymentTypes)) {
             return false;
         }
-        PaymentTypes paymentTypes = (PaymentTypes) o;
-        return Objects.equals(id, paymentTypes.id) 
-        && Objects.equals(description, paymentTypes.description) 
-        && Objects.equals(businessed, paymentTypes.businessed);
+        BusinessTypes businessTypes = (BusinessTypes) o;
+        return Objects.equals(id, businessTypes.id) 
+        && Objects.equals(description, businessTypes.description) 
+        && Objects.equals(business, businessTypes.business);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, businessed);
+        return Objects.hash(id, description, business);
     }
 
     @Override

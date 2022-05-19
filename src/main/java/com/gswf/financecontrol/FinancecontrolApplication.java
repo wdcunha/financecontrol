@@ -4,22 +4,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gswf.financecontrol.model.Business;
+import com.gswf.financecontrol.model.BusinessPayment;
+import com.gswf.financecontrol.model.BusinessProduct;
+import com.gswf.financecontrol.model.BusinessTypes;
 import com.gswf.financecontrol.model.PaymentTypes;
 import com.gswf.financecontrol.model.Person;
 import com.gswf.financecontrol.model.PersonTypes;
 import com.gswf.financecontrol.model.Product;
-import com.gswf.financecontrol.model.PurchasePayment;
-import com.gswf.financecontrol.model.PurchaseProduct;
-import com.gswf.financecontrol.model.Purchases;
-import com.gswf.financecontrol.model.Sales;
+import com.gswf.financecontrol.service.BusinessPaymentService;
+import com.gswf.financecontrol.service.BusinessProductService;
+import com.gswf.financecontrol.service.BusinessService;
+import com.gswf.financecontrol.service.BusinessTypesService;
 import com.gswf.financecontrol.service.PaymentTypesService;
 import com.gswf.financecontrol.service.PersonService;
 import com.gswf.financecontrol.service.PersonTypesService;
 import com.gswf.financecontrol.service.ProductService;
-import com.gswf.financecontrol.service.PurchasePaymentService;
-import com.gswf.financecontrol.service.PurchaseProductService;
-import com.gswf.financecontrol.service.PurchasesService;
-import com.gswf.financecontrol.service.SalesService;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -35,17 +35,18 @@ public class FinancecontrolApplication {
 
 	@Bean
 	CommandLineRunner initDataBase(PersonTypesService personTypesService, PaymentTypesService paymentTypesService, 
-									PersonService personService, ProductService productService, PurchaseProductService purchaseProductService,
-									PurchasesService purchasesService, PurchasePaymentService purchasePaymentService, SalesService salesService) {
+									PersonService personService, ProductService productService, BusinessProductService businessProductService,
+									BusinessService businessService, BusinessPaymentService businessPaymentService,
+									BusinessTypesService businessTypesService) {
 		return args -> {
-			salesService.deleteAllSales();
-			purchasesService.deleteAllPurchases();
+			businessService.deleteAllBusiness();
 			productService.deleteAllProducts();
 			personService.deleteAllPeople();
 			personTypesService.deleteAllPersonTypes();
-			purchaseProductService.deleteAllPurchaseProduct();
-			purchasePaymentService.deleteAllPurchasePayment();
+			businessProductService.deleteAllBusinessProduct();
+			businessPaymentService.deleteAllBusinessPayment();
 			paymentTypesService.deleteAllPaymentTypes();
+			businessTypesService.deleteAllBusinessTypes();
 
 			Product product = new Product();
 			product.setDescription("Moletin branco");
@@ -145,6 +146,14 @@ public class FinancecontrolApplication {
 			client.setPhone("+5561991123876");
 			client.setAddress("Rua das bananeiras sem número na baixa d'égua");
 
+			Person client2 = new Person();
+			client2.setType(personTypes);
+			client2.setName("Francisco Roque");
+			client2.setNumDoc("654321 SSP-MG");
+			client2.setEmail("chico.roque@gmail.com");
+			client2.setPhone("+556198543215");
+			client2.setAddress("Av. Caribenha nº 1534, Res Altaneira, Apto 345, torre B");
+
 			Person seller = new Person();
 			seller.setType(personTypes3);
 			seller.setName("Luzinete Ferreira");
@@ -171,6 +180,7 @@ public class FinancecontrolApplication {
 
 			List<Person> people = new ArrayList<>();
 			people.add(client);
+			people.add(client2);
 			people.add(seller);
 			people.add(store);
 			people.add(store2);
@@ -178,9 +188,9 @@ public class FinancecontrolApplication {
 			personService.saveAllPeople(people);
 
 			PaymentTypes payTypes = new PaymentTypes();
-			payTypes.setDescription("À vista");
+			payTypes.setDescription("Dinheiro");
 			PaymentTypes payTypes2 = new PaymentTypes();
-			payTypes2.setDescription("Cartão");
+			payTypes2.setDescription("Cartão Crédito");
 			PaymentTypes payTypes3 = new PaymentTypes();
 			payTypes3.setDescription("Cheque");
 			PaymentTypes payTypes4 = new PaymentTypes();
@@ -202,82 +212,180 @@ public class FinancecontrolApplication {
 			payTypesList2.add(payTypes);
 			payTypesList2.add(payTypes2);
 
-			Purchases purchases = new Purchases();
+			BusinessTypes businessType = new BusinessTypes();
+			businessType.setDescription("Compra");
+			BusinessTypes businessType2 = new BusinessTypes();
+			businessType2.setDescription("Venda");
+
+			List<BusinessTypes> businessTypes = new ArrayList<>();
+			businessTypes.add(businessType);
+			businessTypes.add(businessType2);
+
+			businessTypesService.saveAllTypes(businessTypes);
+
+			Business purchases = new Business();
 			purchases.setStore(store);
-			purchases.setPaymentsx(payTypesList);
-			purchases.setTotalPrice(1000.10);
-			purchases.setOccurenceDate(LocalDate.of(2022,02,20));
+			purchases.setBusinessType(businessType);
+			purchases.setBusinessDate(LocalDate.of(2022,02,20));
 			purchases.setNotes("Teste de entrada inicial de dados no bd");
 			
-			Purchases purchases2 = new Purchases();
+			Business purchases2 = new Business();
 			purchases2.setStore(store2);
-			purchases2.setPaymentsx(payTypesList2);
-			purchases2.setTotalPrice(3050.88);
-			purchases2.setOccurenceDate(LocalDate.of(2022,04,11));
+			purchases2.setBusinessType(businessType);
+			purchases2.setBusinessDate(LocalDate.of(2022,04,11));
 			purchases2.setNotes("Testa outra compra");
 
-			List<Purchases> purchasesList = new ArrayList<>();
+			List<Business> purchasesList = new ArrayList<>();
 			purchasesList.add(purchases);
 			purchasesList.add(purchases2);
 
-			purchasesService.saveAllPurchases(purchasesList);		
+			businessService.saveAllBusiness(purchasesList);		
 			
-			PurchaseProduct purchaseProduct = new PurchaseProduct();
+			BusinessProduct purchaseProduct = new BusinessProduct();
 			purchaseProduct.setQuantity(21);
-			purchaseProduct.setPurchase(purchases);
+			purchaseProduct.setBusiness(purchases);
 			purchaseProduct.setProduct(productForPurchase);
 			purchaseProduct.setPrice(235.00);
 
-			PurchaseProduct purchaseProduct2 = new PurchaseProduct();
+			BusinessProduct purchaseProduct2 = new BusinessProduct();
 			purchaseProduct2.setQuantity(12);
-			purchaseProduct2.setPurchase(purchases);
+			purchaseProduct2.setBusiness(purchases);
 			purchaseProduct2.setProduct(productForPurchase2);
 			purchaseProduct2.setPrice(18.28);
 
-			purchases.getPurchaseProducts().add(purchaseProduct);
-			purchases.getPurchaseProducts().add(purchaseProduct2);
+			purchases.getBusinessProducts().add(purchaseProduct);
+			purchases.getBusinessProducts().add(purchaseProduct2);
 
-			PurchaseProduct purchaseProduct3 = new PurchaseProduct();
+			BusinessProduct purchaseProduct3 = new BusinessProduct();
 			purchaseProduct3.setQuantity(45);
-			purchaseProduct3.setPurchase(purchases2);
+			purchaseProduct3.setBusiness(purchases2);
 			purchaseProduct3.setProduct(product3);
 			purchaseProduct3.setPrice(18.29);
 
-			PurchaseProduct purchaseProduct4 = new PurchaseProduct();
+			BusinessProduct purchaseProduct4 = new BusinessProduct();
 			purchaseProduct4.setQuantity(50);
-			purchaseProduct4.setPurchase(purchases2);
+			purchaseProduct4.setBusiness(purchases2);
 			purchaseProduct4.setProduct(product5);
 			purchaseProduct4.setPrice(21.33);
 
-			purchases2.getPurchaseProducts().add(purchaseProduct3);
-			purchases2.getPurchaseProducts().add(purchaseProduct4);
+			purchases2.getBusinessProducts().add(purchaseProduct3);
+			purchases2.getBusinessProducts().add(purchaseProduct4);
 
-			List<PurchaseProduct> purchaseProducts = new ArrayList<>();
+			List<BusinessProduct> purchaseProducts = new ArrayList<>();
 			purchaseProducts.add(purchaseProduct);
 			purchaseProducts.add(purchaseProduct2);
 			purchaseProducts.add(purchaseProduct3);
 			purchaseProducts.add(purchaseProduct4);
 
-			purchaseProductService.saveAllPurchaseProduct(purchaseProducts);
+			businessProductService.saveAllBusinessProduct(purchaseProducts);
 
-			PurchasePayment purchasePayment = new PurchasePayment(purchases, payTypes, 1, 500.10);
-			PurchasePayment purchasePayment2 = new PurchasePayment(purchases, payTypes2, 5, 2300.00);
-			PurchasePayment purchasePayment3 = new PurchasePayment(purchases, payTypes3, 3, 1720.45);
+			BusinessPayment purchasePayment = new BusinessPayment();
+			purchasePayment.setQuantity(1);
+			purchasePayment.setAmount(500.10);
+			purchasePayment.setBusiness(purchases);
+			purchasePayment.setPayment(payTypes);
 
-			List<PurchasePayment> purchasePayments = new ArrayList<>();
+			BusinessPayment purchasePayment2 = new BusinessPayment();
+			purchasePayment2.setQuantity(5);
+			purchasePayment2.setAmount(4654.26);
+			purchasePayment2.setBusiness(purchases);
+			purchasePayment2.setPayment(payTypes2);
+
+			purchases.getBusinessPayments().add(purchasePayment);
+			purchases.getBusinessPayments().add(purchasePayment2);
+
+			BusinessPayment purchasePayment3 = new BusinessPayment();
+			purchasePayment3.setQuantity(3);
+			purchasePayment3.setAmount(1889.55);
+			purchasePayment3.setBusiness(purchases2);
+			purchasePayment3.setPayment(payTypes3);
+
+			purchases2.getBusinessPayments().add(purchasePayment3);
+
+			List<BusinessPayment> purchasePayments = new ArrayList<>();
 			purchasePayments.add(purchasePayment);
 			purchasePayments.add(purchasePayment2);
 			purchasePayments.add(purchasePayment3);
 
-			purchasePaymentService.saveAllPurchasePayment(purchasePayments);
+			businessPaymentService.saveAllBusinessPayment(purchasePayments);
+			
+			Business sale = new Business();
+			sale.setStore(client);
+			sale.setBusinessType(businessType2);
+			sale.setBusinessDate(LocalDate.of(2022,05,07));
+			sale.setNotes("Testa venda");
+			
+			Business sale2 = new Business();
+			sale2.setStore(client2);
+			sale2.setBusinessType(businessType2);
+			sale2.setBusinessDate(LocalDate.of(2022,05,14));
+			sale2.setNotes("Testa outra venda");
 
-			Sales sales = new Sales();
-			sales.setClient(client);
-			sales.setQuantity(2);
-			sales.setTotalPrice(2000.20);
-			sales.setSaleDate(LocalDate.of(2022,03,28));
-			sales.setNotes("teste de venda");
-			sales.setProducts(productsForAll);
+			List<Business> salesList = new ArrayList<>();
+			salesList.add(sale);
+			salesList.add(sale2);
+
+			businessService.saveAllBusiness(salesList);	
+						
+			BusinessProduct productsSale = new BusinessProduct();
+			productsSale.setQuantity(5);
+			productsSale.setBusiness(sale);
+			productsSale.setProduct(product3);
+			productsSale.setPrice(95.00);
+						
+			BusinessProduct productsSale2 = new BusinessProduct();
+			productsSale2.setQuantity(14);
+			productsSale2.setBusiness(sale);
+			productsSale2.setProduct(product5);
+			productsSale2.setPrice(229.00);
+
+			sale.getBusinessProducts().add(productsSale);
+			sale.getBusinessProducts().add(productsSale2);
+						
+			BusinessProduct productsSale3 = new BusinessProduct();
+			productsSale3.setQuantity(17);
+			productsSale3.setBusiness(sale2);
+			productsSale3.setProduct(product2);
+			productsSale3.setPrice(198.00);
+						
+			BusinessProduct productsSale4 = new BusinessProduct();
+			productsSale4.setQuantity(10);
+			productsSale4.setBusiness(sale2);
+			productsSale4.setProduct(product4);
+			productsSale4.setPrice(330.00);
+
+			sale2.getBusinessProducts().add(productsSale3);
+			sale2.getBusinessProducts().add(productsSale4);
+
+			List<BusinessProduct> saleProducts = new ArrayList<>();
+			saleProducts.add(productsSale);
+			saleProducts.add(productsSale2);
+			saleProducts.add(productsSale3);
+			saleProducts.add(productsSale4);
+
+			businessProductService.saveAllBusinessProduct(saleProducts);
+
+			BusinessPayment salesPayment = new BusinessPayment();
+			salesPayment.setQuantity(1);
+			salesPayment.setAmount(645.33);
+			salesPayment.setBusiness(sale);
+			salesPayment.setPayment(payTypes2);
+
+			sale.getBusinessPayments().add(salesPayment);
+
+			BusinessPayment salesPayment2 = new BusinessPayment();
+			salesPayment2.setQuantity(5);
+			salesPayment2.setAmount(1234.56);
+			salesPayment2.setBusiness(sale2);
+			salesPayment2.setPayment(payTypes2);
+
+			sale2.getBusinessPayments().add(salesPayment2);
+
+			List<BusinessPayment> salesPayments = new ArrayList<>();
+			salesPayments.add(salesPayment);
+			salesPayments.add(salesPayment2);
+
+			businessPaymentService.saveAllBusinessPayment(salesPayments);
 
 			// productForSales.getSaled().setId(sales.getId());
 
@@ -285,11 +393,6 @@ public class FinancecontrolApplication {
 			// sales.getProducts().add(product3);
 			// sales.getProducts().add(product5);
 			// sales.getProducts().add(product4);
-
-			List<Sales> salesList = new ArrayList<>();
-			salesList.add(sales);
-
-			salesService.saveAllPurchases(salesList);
 
 		// 	List<PurchaseProduct> pp = purchaseProductService.getAllPurchaseProduct();
 

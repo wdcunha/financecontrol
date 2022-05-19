@@ -1,6 +1,6 @@
 package com.gswf.financecontrol.dto;
 
-import com.gswf.financecontrol.model.Purchases;
+import com.gswf.financecontrol.model.Business;
 import com.gswf.financecontrol.model.Sales;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +18,6 @@ public class ProductDto {
     private int quantity;
     private String notes;
 
-    private Purchases purchases;
+    private Business purchases;
     private Sales sales;
 }

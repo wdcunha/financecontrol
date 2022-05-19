@@ -5,10 +5,10 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.gswf.financecontrol.dto.PurchaseProductDto;
-import com.gswf.financecontrol.model.PurchaseProduct;
+import com.gswf.financecontrol.model.BusinessProduct;
 import com.gswf.financecontrol.service.ProductService;
-import com.gswf.financecontrol.service.PurchaseProductService;
-import com.gswf.financecontrol.service.PurchasesService;
+import com.gswf.financecontrol.service.BusinessProductService;
+import com.gswf.financecontrol.service.BusinessService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,27 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/purchase-products")
+@RequestMapping("/api/business-products")
 @AllArgsConstructor
-public class PurchasesProductController {
+public class BusinessProductController {
     
     @Resource
-    private final PurchaseProductService purchaseProductService;
+    private final BusinessProductService businessProductService;
     
     @Resource
     private final ProductService productService;
     
     @Resource
-    private final PurchasesService purchasesService;
+    private final BusinessService businessService;
 
     @GetMapping(value = {"", "/"})
-    public List<PurchaseProduct> getAllProductPurchases() {
-        return purchaseProductService.getAllPurchaseProduct();
+    public List<BusinessProduct> getAllProductBusiness() {
+        return businessProductService.getAllBusinessProduct();
     }
 
     @PostMapping(value = {"", "/save"})
-    public List<PurchaseProduct> save(List<PurchaseProduct> purchaseProduct) {
-        return purchaseProductService.saveAllPurchaseProduct(purchaseProduct);
+    public List<BusinessProduct> save(List<BusinessProduct> businessProduct) {
+        return businessProductService.saveAllBusinessProduct(businessProduct);
     }
 
     public static class PurchaseForm {

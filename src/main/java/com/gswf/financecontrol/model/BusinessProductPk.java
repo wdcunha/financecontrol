@@ -10,24 +10,24 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Embeddable
-public class PurchaseProductPk implements Serializable {
+public class BusinessProductPk implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "purchase")
-    private Purchases purchase;
+    @JoinColumn(name = "business")
+    private Business business;
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "product")
     private Product product;
 
     @JsonBackReference
-    public Purchases getPurchase() {
-        return this.purchase;
+    public Business getBusiness() {
+        return this.business;
     }
 
-    public void setPurchase(Purchases purchase) {
-        this.purchase = purchase;
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
     @JsonBackReference
@@ -42,7 +42,7 @@ public class PurchaseProductPk implements Serializable {
     @Override
     public String toString() {
         return "{" +
-            " purchase='" + getPurchase() + "'" +
+            " business='" + getBusiness() + "'" +
             ", product='" + getProduct() + "'" +
             "}";
     }
@@ -50,7 +50,7 @@ public class PurchaseProductPk implements Serializable {
     @Override
     public int hashCode() {
         int result;
-        result = (purchase != null ? purchase.hashCode() : 0);
+        result = (business != null ? business.hashCode() : 0);
         result = 31 * result + (product != null ? product.hashCode() : 0);
         return result;
     }
@@ -60,9 +60,9 @@ public class PurchaseProductPk implements Serializable {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
 
-        PurchaseProductPk that = (PurchaseProductPk) obj;
+        BusinessProductPk that = (BusinessProductPk) obj;
 
-        if (purchase != null ? !purchase.equals(that.purchase) : that.purchase != null) 
+        if (business != null ? !business.equals(that.business) : that.business != null) 
             return false;
         if (product != null ? !product.equals(that.product) : that.product != null)
             return false;

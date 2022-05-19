@@ -45,7 +45,7 @@ public class Product implements Serializable {
     private String notes;
     
     @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER, mappedBy = "pk.product")
-    private List<PurchaseProduct> purchase = new ArrayList<>();
+    private List<BusinessProduct> business = new ArrayList<>();
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "saled")
@@ -55,13 +55,13 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String description, String size, Double price, int quantity, String notes, List<PurchaseProduct> purchase, Sales sale) {
+    public Product(String description, String size, Double price, int quantity, String notes, List<BusinessProduct> business, Sales sale) {
         this.description = description;
         this.size = size;
         this.price = price;
         this.quantity = quantity;
         this.notes = notes;
-        this.purchase = purchase;
+        this.business = business;
         this.saled = sale;
     }
 
@@ -114,12 +114,12 @@ public class Product implements Serializable {
     }
 
     @JsonIgnore
-    public List<PurchaseProduct> getPurchaseProduct() {
-        return this.purchase;
+    public List<BusinessProduct> getBusinessProduct() {
+        return this.business;
     }
 
-    public void setPurchaseProduct(List<PurchaseProduct> purchase) {
-        this.purchase = purchase;
+    public void setBusinessProduct(List<BusinessProduct> business) {
+        this.business = business;
     }
 
     public Sales getSaled() {
@@ -144,13 +144,13 @@ public class Product implements Serializable {
         && Objects.equals(price, product.price) 
         && quantity == product.quantity 
         && Objects.equals(notes, product.notes) 
-        && Objects.equals(purchase, product.purchase) 
+        && Objects.equals(business, product.business) 
         && Objects.equals(saled, product.saled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, size, price, quantity, notes, purchase, saled);
+        return Objects.hash(id, description, size, price, quantity, notes, business, saled);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class Product implements Serializable {
             ", price='" + getPrice() + "'" +
             ", quantity='" + getQuantity() + "'" +
             ", notes='" + getNotes() + "'" +
-            ", purchase='" + getPurchaseProduct() + "'" +
+            ", business='" + getBusinessProduct() + "'" +
             ", sales='" + getSaled() + "'" +
             "}";
     }

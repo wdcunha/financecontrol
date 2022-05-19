@@ -48,7 +48,7 @@ public class Person {
     
     @OneToMany(mappedBy = "store")
     @JsonIgnore
-    private List<Purchases> purchases;
+    private List<Business> business;
 
     @OneToMany(mappedBy = "client")
     @JsonIgnore

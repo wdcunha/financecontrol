@@ -1,7 +1,7 @@
 package com.gswf.financecontrol.dto;
 
 import com.gswf.financecontrol.model.Product;
-import com.gswf.financecontrol.model.Purchases;
+import com.gswf.financecontrol.model.Business;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class PurchaseProductDto {
         
-    private Purchases purchase;
+    private Business purchase;
     private Product product;
     private Integer quantity;
 

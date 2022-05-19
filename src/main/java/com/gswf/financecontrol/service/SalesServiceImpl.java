@@ -23,7 +23,7 @@ public class SalesServiceImpl implements SalesService {
     }
   
     @Override
-    public List<Sales> saveAllPurchases(List<Sales> sales) {
+    public List<Sales> saveAllSales(List<Sales> sales) {
         return salesRepo.saveAll(sales);        
     }
   

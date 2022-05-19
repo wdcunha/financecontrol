@@ -38,15 +38,11 @@ public class Sales implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "sales-seq")
     @GenericGenerator(name = "sales-seq", strategy = "native")
-    @Id
     private long id;
 
-    @Column(length = 8, nullable = false)
-    private int quantity;
-    @Column(length = 6, nullable = false)
-    private Double totalPrice;
     @JsonFormat(pattern = "dd/MM/yyyy")
     @JsonSerialize(using = LocalDateSerializer.class)
     @Column(length = 8, nullable = false)

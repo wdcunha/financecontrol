@@ -11,7 +11,7 @@ public interface SalesService {
       
     List<Sales> getAllSales();
   
-    List<Sales> saveAllPurchases(List<Sales> sales);
+    List<Sales> saveAllSales(List<Sales> sales);
 
     void deleteAllSales();
 }

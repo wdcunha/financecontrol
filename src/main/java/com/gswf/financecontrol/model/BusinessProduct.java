@@ -12,14 +12,14 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "purchase_product")
+@Table(name = "business_product")
 @AssociationOverrides({
-    @AssociationOverride(name = "pk.purchase", joinColumns = @JoinColumn(name = "purchase_id")),
+    @AssociationOverride(name = "pk.business", joinColumns = @JoinColumn(name = "business_id")),
     @AssociationOverride(name = "pk.product", joinColumns = @JoinColumn(name = "product_id")) })
-public class PurchaseProduct {
+public class BusinessProduct {
 
     @EmbeddedId
-    private PurchaseProductPk pk = new PurchaseProductPk();
+    private BusinessProductPk pk = new BusinessProductPk();
 
     @Column(length = 5, nullable = false)
     private Integer quantity;
@@ -27,13 +27,19 @@ public class PurchaseProduct {
     @Column(length = 5, nullable = false)
     private Double price;
 
-    public PurchaseProduct() {}
+    public BusinessProduct() {}
 
-    public PurchaseProductPk getPk() {
+    public BusinessProduct(BusinessProductPk pk, Integer quantity, Double price) {
+        this.pk = pk;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public BusinessProductPk getPk() {
         return this.pk;
     }
 
-    public void setPk(PurchaseProductPk pk) {
+    public void setPk(BusinessProductPk pk) {
         this.pk = pk;
     }
 
@@ -48,17 +54,17 @@ public class PurchaseProduct {
 
     @Transient
     @JsonBackReference
-    public Purchases getPurchase() {
-        return this.getPk().getPurchase();
+    public Business getBusiness() {
+        return this.getPk().getBusiness();
     }
 
-	public void setPurchase(Purchases purchase) {
-		getPk().setPurchase(purchase);
+	public void setBusiness(Business business) {
+		getPk().setBusiness(business);
 	}
 
     @Transient
     public Double getTotalPrice() {
-        return getProduct().getPrice() * getQuantity();
+        return getPrice() * getQuantity();
     }
 
     public Integer getQuantity() {
@@ -93,7 +99,7 @@ public class PurchaseProduct {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        PurchaseProduct other = (PurchaseProduct) obj;
+        BusinessProduct other = (BusinessProduct) obj;
         if (pk == null) {
             if (other.pk != null) {
                 return false;
