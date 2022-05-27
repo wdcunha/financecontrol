@@ -280,32 +280,127 @@ public class FinancecontrolApplication {
 			businessProductService.saveAllBusinessProduct(purchaseProducts);
 
 			BusinessPayment purchasePayment = new BusinessPayment();
-			purchasePayment.setQuantity(1);
+			purchasePayment.setInstallment(1);
 			purchasePayment.setAmount(500.10);
+			purchasePayment.setPayDate(LocalDate.of(2022,02,20));
+			purchasePayment.setPayed(true);
 			purchasePayment.setBusiness(purchases);
 			purchasePayment.setPayment(payTypes);
 
 			BusinessPayment purchasePayment2 = new BusinessPayment();
-			purchasePayment2.setQuantity(5);
-			purchasePayment2.setAmount(4654.26);
+			purchasePayment2.setInstallment(1);
+			purchasePayment2.setAmount(930.85);
+			purchasePayment2.setPayDate(LocalDate.of(2022,03,20));
+			purchasePayment2.setPayed(false);
 			purchasePayment2.setBusiness(purchases);
 			purchasePayment2.setPayment(payTypes2);
 
+			BusinessPayment purchasePayment22 = new BusinessPayment();
+			purchasePayment22.setInstallment(2);
+			purchasePayment22.setAmount(930.85);
+			purchasePayment22.setPayDate(LocalDate.of(2022,04,20));
+			purchasePayment22.setPayed(false);
+			purchasePayment22.setBusiness(purchases);
+			purchasePayment22.setPayment(payTypes2);
+
+			BusinessPayment purchasePayment23 = new BusinessPayment();
+			purchasePayment23.setInstallment(3);
+			purchasePayment23.setAmount(930.85);
+			purchasePayment23.setPayDate(LocalDate.of(2022,05,20));
+			purchasePayment23.setPayed(false);
+			purchasePayment23.setBusiness(purchases);
+			purchasePayment23.setPayment(payTypes2);
+
+			BusinessPayment purchasePayment24 = new BusinessPayment();
+			purchasePayment24.setInstallment(4);
+			purchasePayment24.setAmount(930.85);
+			purchasePayment24.setPayDate(LocalDate.of(2022,06,20));
+			purchasePayment24.setPayed(false);
+			purchasePayment24.setBusiness(purchases);
+			purchasePayment24.setPayment(payTypes2);
+
+			BusinessPayment purchasePayment25 = new BusinessPayment();
+			purchasePayment25.setInstallment(5);
+			purchasePayment25.setAmount(930.85);
+			purchasePayment25.setPayDate(LocalDate.of(2022,07,20));
+			purchasePayment25.setPayed(false);
+			purchasePayment25.setBusiness(purchases);
+			purchasePayment25.setPayment(payTypes2);
+
 			purchases.getBusinessPayments().add(purchasePayment);
 			purchases.getBusinessPayments().add(purchasePayment2);
+			purchases.getBusinessPayments().add(purchasePayment22);
+			purchases.getBusinessPayments().add(purchasePayment23);
+			purchases.getBusinessPayments().add(purchasePayment24);
+			purchases.getBusinessPayments().add(purchasePayment25);
 
 			BusinessPayment purchasePayment3 = new BusinessPayment();
-			purchasePayment3.setQuantity(3);
-			purchasePayment3.setAmount(1889.55);
+			purchasePayment3.setInstallment(1);
+			purchasePayment3.setAmount(314.92);
+			purchasePayment3.setPayDate(LocalDate.of(2022,07,20));
+			purchasePayment3.setPayed(false);
 			purchasePayment3.setBusiness(purchases2);
 			purchasePayment3.setPayment(payTypes3);
 
+			BusinessPayment purchasePayment32 = new BusinessPayment();
+			purchasePayment32.setInstallment(2);
+			purchasePayment32.setAmount(314.92);
+			purchasePayment32.setPayDate(LocalDate.of(2022,8,20));
+			purchasePayment32.setPayed(false);
+			purchasePayment32.setBusiness(purchases2);
+			purchasePayment32.setPayment(payTypes3);
+
+			BusinessPayment purchasePayment33 = new BusinessPayment();
+			purchasePayment33.setInstallment(3);
+			purchasePayment33.setAmount(314.92);
+			purchasePayment33.setPayDate(LocalDate.of(2022,9,20));
+			purchasePayment33.setPayed(false);
+			purchasePayment33.setBusiness(purchases2);
+			purchasePayment33.setPayment(payTypes3);
+
+			BusinessPayment purchasePayment34 = new BusinessPayment();
+			purchasePayment34.setInstallment(4);
+			purchasePayment34.setAmount(314.92);
+			purchasePayment34.setPayDate(LocalDate.of(2022,10,20));
+			purchasePayment34.setPayed(false);
+			purchasePayment34.setBusiness(purchases2);
+			purchasePayment34.setPayment(payTypes3);
+
+			BusinessPayment purchasePayment35 = new BusinessPayment();
+			purchasePayment35.setInstallment(5);
+			purchasePayment35.setAmount(314.92);
+			purchasePayment35.setPayDate(LocalDate.of(2022,11,20));
+			purchasePayment35.setPayed(false);
+			purchasePayment35.setBusiness(purchases2);
+			purchasePayment35.setPayment(payTypes3);
+
+			BusinessPayment purchasePayment36 = new BusinessPayment();
+			purchasePayment36.setInstallment(6);
+			purchasePayment36.setAmount(314.92);
+			purchasePayment36.setPayDate(LocalDate.of(2022,11,20));
+			purchasePayment36.setPayed(false);
+			purchasePayment36.setBusiness(purchases2);
+			purchasePayment36.setPayment(payTypes3);
+
 			purchases2.getBusinessPayments().add(purchasePayment3);
+			purchases2.getBusinessPayments().add(purchasePayment32);
+			purchases2.getBusinessPayments().add(purchasePayment33);
+			purchases2.getBusinessPayments().add(purchasePayment34);
+			purchases2.getBusinessPayments().add(purchasePayment35);
+			purchases2.getBusinessPayments().add(purchasePayment36);
 
 			List<BusinessPayment> purchasePayments = new ArrayList<>();
 			purchasePayments.add(purchasePayment);
 			purchasePayments.add(purchasePayment2);
+			purchasePayments.add(purchasePayment22);
+			purchasePayments.add(purchasePayment23);
+			purchasePayments.add(purchasePayment24);
 			purchasePayments.add(purchasePayment3);
+			purchasePayments.add(purchasePayment32);
+			purchasePayments.add(purchasePayment33);
+			purchasePayments.add(purchasePayment34);
+			purchasePayments.add(purchasePayment35);
+			purchasePayments.add(purchasePayment36);
 
 			businessPaymentService.saveAllBusinessPayment(purchasePayments);
 			
@@ -366,24 +461,69 @@ public class FinancecontrolApplication {
 			businessProductService.saveAllBusinessProduct(saleProducts);
 
 			BusinessPayment salesPayment = new BusinessPayment();
-			salesPayment.setQuantity(1);
+			salesPayment.setInstallment(1);
 			salesPayment.setAmount(645.33);
+			salesPayment.setPayDate(LocalDate.of(2022,05,07));
+			salesPayment.setPayed(true);
 			salesPayment.setBusiness(sale);
 			salesPayment.setPayment(payTypes2);
 
 			sale.getBusinessPayments().add(salesPayment);
 
 			BusinessPayment salesPayment2 = new BusinessPayment();
-			salesPayment2.setQuantity(5);
-			salesPayment2.setAmount(1234.56);
+			salesPayment2.setInstallment(1);
+			salesPayment2.setAmount(246.91);
+			salesPayment2.setPayDate(LocalDate.of(2022,06,14));
+			salesPayment2.setPayed(true);
 			salesPayment2.setBusiness(sale2);
 			salesPayment2.setPayment(payTypes2);
 
+			BusinessPayment salesPayment22 = new BusinessPayment();
+			salesPayment22.setInstallment(2);
+			salesPayment22.setAmount(246.91);
+			salesPayment22.setPayDate(LocalDate.of(2022,07,14));
+			salesPayment22.setPayed(false);
+			salesPayment22.setBusiness(sale2);
+			salesPayment22.setPayment(payTypes2);
+
+			BusinessPayment salesPayment23 = new BusinessPayment();
+			salesPayment23.setInstallment(3);
+			salesPayment23.setAmount(246.91);
+			salesPayment23.setPayDate(LocalDate.of(2022,8,14));
+			salesPayment23.setPayed(false);
+			salesPayment23.setBusiness(sale2);
+			salesPayment23.setPayment(payTypes2);
+
+			BusinessPayment salesPayment24 = new BusinessPayment();
+			salesPayment24.setInstallment(4);
+			salesPayment24.setAmount(246.91);
+			salesPayment24.setPayDate(LocalDate.of(2022,9,14));
+			salesPayment24.setPayed(false);
+			salesPayment24.setBusiness(sale2);
+			salesPayment24.setPayment(payTypes2);
+
+			BusinessPayment salesPayment25 = new BusinessPayment();
+			salesPayment25.setInstallment(5);
+			salesPayment25.setAmount(246.91);
+			salesPayment25.setPayDate(LocalDate.of(2022,10,14));
+			salesPayment25.setPayed(false);
+			salesPayment25.setBusiness(sale2);
+			salesPayment25.setPayment(payTypes2);
+
+			sale2.getBusinessPayments().add(salesPayment);
 			sale2.getBusinessPayments().add(salesPayment2);
+			sale2.getBusinessPayments().add(salesPayment22);
+			sale2.getBusinessPayments().add(salesPayment23);
+			sale2.getBusinessPayments().add(salesPayment24);
+			sale2.getBusinessPayments().add(salesPayment25);
 
 			List<BusinessPayment> salesPayments = new ArrayList<>();
 			salesPayments.add(salesPayment);
 			salesPayments.add(salesPayment2);
+			salesPayments.add(salesPayment22);
+			salesPayments.add(salesPayment23);
+			salesPayments.add(salesPayment24);
+			salesPayments.add(salesPayment25);
 
 			businessPaymentService.saveAllBusinessPayment(salesPayments);
 
