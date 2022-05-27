@@ -12,8 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -47,22 +45,16 @@ public class Product implements Serializable {
     @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER, mappedBy = "pk.product")
     private List<BusinessProduct> business = new ArrayList<>();
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "saled")
-    @JsonIgnore
-    private Sales saled;
-
     public Product() {
     }
 
-    public Product(String description, String size, Double price, int quantity, String notes, List<BusinessProduct> business, Sales sale) {
+    public Product(String description, String size, Double price, int quantity, String notes, List<BusinessProduct> business) {
         this.description = description;
         this.size = size;
         this.price = price;
         this.quantity = quantity;
         this.notes = notes;
         this.business = business;
-        this.saled = sale;
     }
 
     public Long getId() {
@@ -122,14 +114,6 @@ public class Product implements Serializable {
         this.business = business;
     }
 
-    public Sales getSaled() {
-        return this.saled;
-    }
-
-    public void setSaled(Sales saled) {
-        this.saled = saled;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -144,13 +128,12 @@ public class Product implements Serializable {
         && Objects.equals(price, product.price) 
         && quantity == product.quantity 
         && Objects.equals(notes, product.notes) 
-        && Objects.equals(business, product.business) 
-        && Objects.equals(saled, product.saled);
+        && Objects.equals(business, product.business);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, size, price, quantity, notes, business, saled);
+        return Objects.hash(id, description, size, price, quantity, notes, business);
     }
 
     @Override
@@ -163,7 +146,6 @@ public class Product implements Serializable {
             ", quantity='" + getQuantity() + "'" +
             ", notes='" + getNotes() + "'" +
             ", business='" + getBusinessProduct() + "'" +
-            ", sales='" + getSaled() + "'" +
             "}";
     }
 }

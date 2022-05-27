@@ -49,8 +49,4 @@ public class Person {
     @OneToMany(mappedBy = "store")
     @JsonIgnore
     private List<Business> business;
-
-    @OneToMany(mappedBy = "client")
-    @JsonIgnore
-    private List<Sales> sales;
 }
