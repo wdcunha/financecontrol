@@ -21,6 +21,8 @@ public class BusinessPaymentPk implements Serializable {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "payment")
     private PaymentTypes payment;
+            
+    private Integer installment;
 
     @JsonBackReference
     public Business getBusiness() {
@@ -40,11 +42,20 @@ public class BusinessPaymentPk implements Serializable {
         this.payment = payment;
     }
 
+    public Integer getInstallment() {
+        return this.installment;
+    }
+
+    public void setInstallment(Integer installment) {
+        this.installment = installment;
+    }
+
     @Override
     public String toString() {
         return "{" +
             " business='" + getBusiness() + "'" +
             ", payment='" + getPayment() + "'" +
+            ", installment='" + getInstallment() + "'" +
             "}";
     }
 
