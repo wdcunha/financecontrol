@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -121,6 +123,11 @@ public class Business implements Serializable {
         this.businessPayments = payments;
     }
 
+    public Map<String, Long> getCountIntallments() {
+        return getBusinessPayments().stream()
+        .collect(Collectors.groupingBy(BusinessPayment::getPaymentType, Collectors.counting()));
+    }
+
     public Person getStore() {
         return this.store;
     }
@@ -170,6 +177,7 @@ public class Business implements Serializable {
             ", payment='" + getBusinessPayments() + "'" +
             ", store='" + getStore() + "'" +
             ", businessType='" + getBusinessType() + "'" +
+            ", getCountIntallments='" + getCountIntallments() + "'" +
             "}";
     }
 }

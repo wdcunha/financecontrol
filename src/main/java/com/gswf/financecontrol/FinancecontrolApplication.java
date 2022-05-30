@@ -395,6 +395,7 @@ public class FinancecontrolApplication {
 			purchasePayments.add(purchasePayment22);
 			purchasePayments.add(purchasePayment23);
 			purchasePayments.add(purchasePayment24);
+			purchasePayments.add(purchasePayment25);
 			purchasePayments.add(purchasePayment3);
 			purchasePayments.add(purchasePayment32);
 			purchasePayments.add(purchasePayment33);

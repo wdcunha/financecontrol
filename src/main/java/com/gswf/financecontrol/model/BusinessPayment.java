@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
@@ -61,12 +62,15 @@ public class BusinessPayment {
         return this.getPk().getPayment();
     }
 
+    public String getPaymentType() {
+        return this.getPk().getPayment().getDescription();
+    }
+
 	public void setPayment(PaymentTypes payment) {
 		getPk().setPayment(payment);
 	}
 
-    @Transient
-    @JsonBackReference
+    @JsonIgnore
     public Business getBusiness() {
         return this.getPk().getBusiness();
     }
