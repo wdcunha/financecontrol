@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -125,7 +126,14 @@ public class Business implements Serializable {
 
     public Map<String, Long> getCountIntallments() {
         return getBusinessPayments().stream()
-        .collect(Collectors.groupingBy(BusinessPayment::getPaymentType, Collectors.counting()));
+        .collect(Collectors
+        .groupingBy(BusinessPayment::getPaymentType, Collectors.counting()));
+    }
+
+    public Set<Double> getIntallmentsValues() {
+        return getBusinessPayments().stream()
+        .map(BusinessPayment::getAmount)
+        .collect(Collectors.toSet());
     }
 
     public Person getStore() {
