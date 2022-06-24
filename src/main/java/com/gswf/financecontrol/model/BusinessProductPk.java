@@ -21,7 +21,7 @@ public class BusinessProductPk implements Serializable {
     @JoinColumn(name = "product")
     private Product product;
 
-    @JsonBackReference
+    @JsonBackReference(value = "business-product")
     public Business getBusiness() {
         return this.business;
     }

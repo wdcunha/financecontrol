@@ -53,7 +53,7 @@ public class BusinessProduct {
 	}
 
     @Transient
-    @JsonBackReference
+    @JsonBackReference(value = "business-product")
     public Business getBusiness() {
         return this.getPk().getBusiness();
     }

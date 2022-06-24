@@ -24,7 +24,7 @@ public class BusinessPaymentPk implements Serializable {
             
     private Integer installment;
 
-    @JsonBackReference
+    @JsonBackReference(value = "business-payment")
     public Business getBusiness() {
         return this.business;
     }

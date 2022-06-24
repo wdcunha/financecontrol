@@ -13,7 +13,6 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
@@ -70,7 +69,8 @@ public class BusinessPayment {
 		getPk().setPayment(payment);
 	}
 
-    @JsonIgnore
+    @Transient
+    @JsonBackReference(value = "business-payment")
     public Business getBusiness() {
         return this.getPk().getBusiness();
     }
@@ -78,12 +78,6 @@ public class BusinessPayment {
 	public void setBusiness(Business business) {
 		getPk().setBusiness(business);
 	}
-
-    @Transient
-    @JsonBackReference
-    public Integer getInstallment() {
-        return this.getPk().getInstallment();
-    }
 
 	public void setInstallment(Integer installment) {
 		getPk().setInstallment(installment);
