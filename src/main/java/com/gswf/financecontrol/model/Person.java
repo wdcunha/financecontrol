@@ -2,6 +2,7 @@ package com.gswf.financecontrol.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,7 +47,7 @@ public class Person {
     @JoinColumn(name = "type")
     private PersonTypes type;
     
-    @OneToMany(mappedBy = "store")
+    @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER, mappedBy = "entity")
     @JsonIgnore
     private List<Business> business;
 }
