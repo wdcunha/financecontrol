@@ -33,6 +33,11 @@ public class BusinessServiceImpl implements BusinessService {
     }
   
     @Override
+    public Business saveBusiness(Business business) {
+        return businessRepo.save(business);        
+    }
+  
+    @Override
     public List<Business> saveAllBusiness(List<Business> business) {
         return businessRepo.saveAll(business);        
     }

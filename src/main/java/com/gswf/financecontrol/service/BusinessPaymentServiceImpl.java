@@ -23,6 +23,11 @@ public class BusinessPaymentServiceImpl implements BusinessPaymentService {
     }
   
     @Override
+    public BusinessPayment saveBusinessPayment(BusinessPayment businessPayment) {
+        return businessPaymentRepo.save(businessPayment);        
+    }
+  
+    @Override
     public List<BusinessPayment> saveAllBusinessPayment(List<BusinessPayment> businessPayment) {
         return businessPaymentRepo.saveAll(businessPayment);        
     }

@@ -15,6 +15,8 @@ public interface BusinessService {
     
     List<Business> getAllBusiness();
   
+    Business saveBusiness(Business business);
+    
     List<Business> saveAllBusiness(List<Business> business);
 
     void deleteAllBusiness();
