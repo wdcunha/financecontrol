@@ -21,11 +21,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -40,8 +37,6 @@ public class Business implements Serializable {
     @GenericGenerator(name = "business_seq", strategy = "native")
     private Long id;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    @JsonSerialize(using = LocalDateSerializer.class)
     @Column(length = 8, nullable = false)
     private LocalDate businessDate;
     @Column(length = 255, nullable = true)
@@ -54,8 +49,8 @@ public class Business implements Serializable {
     private List<BusinessPayment> businessPayments = new ArrayList<>();
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "store")
-    private Person store;
+    @JoinColumn(name = "entity")
+    private Person entity;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "business_type")
@@ -66,12 +61,12 @@ public class Business implements Serializable {
 
     public Business(LocalDate businessDate, String notes, 
                      List<BusinessProduct> businessProducts, List<BusinessPayment> payments, 
-                     Person store, BusinessTypes businessType) {
+                     Person entity, BusinessTypes businessType) {
         this.businessDate = businessDate;
         this.notes = notes;
         this.businessProducts = businessProducts;
         this.businessPayments = payments;
-        this.store = store;
+        this.entity = entity;
         this.businessType = businessType;
     }
 
@@ -106,7 +101,7 @@ public class Business implements Serializable {
         this.notes = notes;
     }
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "business-product")
     public List<BusinessProduct> getBusinessProducts() {
         return this.businessProducts;
     }
@@ -115,7 +110,7 @@ public class Business implements Serializable {
         this.businessProducts = businessProducts;
     }
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "business-payment")
     public List<BusinessPayment> getBusinessPayments() {
         return this.businessPayments;
     }
@@ -136,12 +131,12 @@ public class Business implements Serializable {
         .collect(Collectors.toSet());
     }
 
-    public Person getStore() {
-        return this.store;
+    public Person getEntity() {
+        return this.entity;
     }
 
-    public void setStore(Person store) {
-        this.store = store;
+    public void setEntity(Person entity) {
+        this.entity = entity;
     }
 
     public BusinessTypes getBusinessType() {
@@ -165,13 +160,13 @@ public class Business implements Serializable {
         && Objects.equals(notes, business.notes) 
         && Objects.equals(businessProducts, business.businessProducts) 
         && Objects.equals(businessPayments, business.businessPayments) 
-        && Objects.equals(store, business.store)
+        && Objects.equals(entity, business.entity)
         && Objects.equals(businessType, business.businessType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, businessDate, notes, businessProducts, businessPayments, store, businessType);
+        return Objects.hash(id, businessDate, notes, businessProducts, businessPayments, entity, businessType);
     }
 
     @Override
@@ -183,7 +178,7 @@ public class Business implements Serializable {
             ", notes='" + getNotes() + "'" +
             ", products='" + getBusinessProducts() + "'" +
             ", payment='" + getBusinessPayments() + "'" +
-            ", store='" + getStore() + "'" +
+            ", entity='" + getEntity() + "'" +
             ", businessType='" + getBusinessType() + "'" +
             ", getCountIntallments='" + getCountIntallments() + "'" +
             "}";

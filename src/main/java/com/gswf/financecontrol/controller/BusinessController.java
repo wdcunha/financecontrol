@@ -10,6 +10,7 @@ import com.gswf.financecontrol.service.BusinessService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,12 @@ public class BusinessController {
     }
 
     @PostMapping(value = {"", "/save"})
-    public List<Business> save(List<Business> business) {
+    public Business save(@RequestBody Business business) {
+        return businessService.saveBusiness(business);
+    }
+
+    @PostMapping(value = {"", "/save-all"})
+    public List<Business> saveAll(List<Business> business) {
         return businessService.saveAllBusiness(business);
     }
 

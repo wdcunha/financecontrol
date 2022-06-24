@@ -224,13 +224,13 @@ public class FinancecontrolApplication {
 			businessTypesService.saveAllTypes(businessTypes);
 
 			Business purchases = new Business();
-			purchases.setStore(store);
+			purchases.setEntity(store);
 			purchases.setBusinessType(businessType);
 			purchases.setBusinessDate(LocalDate.of(2022,02,20));
 			purchases.setNotes("Teste de entrada inicial de dados no bd");
 			
 			Business purchases2 = new Business();
-			purchases2.setStore(store2);
+			purchases2.setEntity(store2);
 			purchases2.setBusinessType(businessType);
 			purchases2.setBusinessDate(LocalDate.of(2022,04,11));
 			purchases2.setNotes("Testa outra compra");
@@ -406,13 +406,13 @@ public class FinancecontrolApplication {
 			businessPaymentService.saveAllBusinessPayment(purchasePayments);
 			
 			Business sale = new Business();
-			sale.setStore(client);
+			sale.setEntity(client);
 			sale.setBusinessType(businessType2);
 			sale.setBusinessDate(LocalDate.of(2022,05,07));
 			sale.setNotes("Testa venda");
 			
 			Business sale2 = new Business();
-			sale2.setStore(client2);
+			sale2.setEntity(client2);
 			sale2.setBusinessType(businessType2);
 			sale2.setBusinessDate(LocalDate.of(2022,05,14));
 			sale2.setNotes("Testa outra venda");
