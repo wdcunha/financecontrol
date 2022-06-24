@@ -11,6 +11,8 @@ public interface BusinessPaymentService {
       
     List<BusinessPayment> getAllBusinessPayment();
   
+    BusinessPayment saveBusinessPayment(BusinessPayment businessPayment);
+  
     List<BusinessPayment> saveAllBusinessPayment(List<BusinessPayment> businessPayment);
 
     void deleteAllBusinessPayment();
