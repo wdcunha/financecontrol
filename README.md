@@ -24,6 +24,8 @@ But the Total Price of Purchases was necessary to remove the field and add a get
 
 Another challange is to control installments independently, so it is necessary to create each one and then save to database in business payment table. When  getting data from business, this information will need to be calculated distinctly.
 
+BusinessProduct API had a problem that was first to deserialize data from frontend because the form value sent as object and the controller waits for array, that's why an array variable was createad within onSubmit method to be sent as parameter to the post service. So it's important to notice that FormArray deliever fields differently, then be aware about the content type is essencial to not have error in the backend that has not much evidence of what is causing it: ```Cannot deserialize value of type `java.util.ArrayList<com.gswf.financecontrol.model.BusinessProduct>` from Object value (token `JsonToken.START_OBJECT`)```, and I found in a post a comment that saved much time of headaches (Error ao usar o post no postman)[https://www.guj.com.br/t/error-ao-usar-o-post-no-postman/422933].
+
 ### SQL
 
 ```delete from business_payment where payment_id=2 and business_id=1 and installment=5;```
