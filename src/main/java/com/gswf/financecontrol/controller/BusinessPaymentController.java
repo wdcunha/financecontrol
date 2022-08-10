@@ -4,15 +4,18 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.gswf.financecontrol.model.BusinessPayment;
 import com.gswf.financecontrol.service.BusinessPaymentService;
 import com.gswf.financecontrol.service.BusinessService;
 import com.gswf.financecontrol.service.PaymentTypesService;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 
@@ -36,6 +39,8 @@ public class BusinessPaymentController {
     }
 
     @PostMapping(value = {"", "/save"})
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public List<BusinessPayment> save(@RequestBody List<BusinessPayment> businessPayment) {
     public List<BusinessPayment> save(List<BusinessPayment> businessPayment) {
         return businessPaymentService.saveAllBusinessPayment(businessPayment);
     }

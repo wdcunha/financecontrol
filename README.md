@@ -32,6 +32,13 @@ BusinessProduct API had a problem that was first to deserialize data from fronte
 
 ```insert into business_payment (payment_id, business_id, installment, payed, pay_date, amount) values (2, 1, 5, 0x00, '2022-07-20', 930.85);```
 
+### TOMCAT PROBLEM
+
+Port 8080 already in use is an error that happens sometimes and the steps to solve are, accordingly to (article about it)[https://springhow.com/web-server-failed-to-start-port-8080-was-already-in-use/]:
+
+1) take the process id (PID): ```lsof -n -i :8080 | grep LISTEN```
+2) kill it: ```kill -15```
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 

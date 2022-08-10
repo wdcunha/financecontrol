@@ -1,6 +1,7 @@
 package com.gswf.financecontrol.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
@@ -12,9 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 @Entity
 @Table(name = "business_payment")
@@ -30,8 +28,6 @@ public class BusinessPayment {
     @Column(length = 10)
     private Double amount;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    @JsonSerialize(using = LocalDateSerializer.class)
     @Column(length = 8, nullable = false)
     private LocalDate payDate;
 
@@ -112,30 +108,32 @@ public class BusinessPayment {
     }
 
     @Override
-    public int hashCode() {
-		return (getPk() != null ? getPk().hashCode() : 0);
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof BusinessPayment)) {
+            return false;
+        }
+        BusinessPayment businessPayment = (BusinessPayment) o;
+        return Objects.equals(pk, businessPayment.pk) 
+        && Objects.equals(amount, businessPayment.amount) 
+        && Objects.equals(payDate, businessPayment.payDate) 
+        && payed == businessPayment.payed;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        BusinessPayment other = (BusinessPayment) obj;
-        if (pk == null) {
-            if (other.pk != null) {
-                return false;
-            }
-        } else if (!pk.equals(other.pk)) {
-            return false;
-        }
-
-        return true;
+    public int hashCode() {
+        return Objects.hash(pk, amount, payDate, payed);
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " pk='" + getPk() + "'" +
+            ", amount='" + getAmount() + "'" +
+            ", payDate='" + getPayDate() + "'" +
+            ", payed='" + isPayed() + "'" +
+            "}";
+    }
+
 }
