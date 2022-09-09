@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.gswf.financecontrol.model.Business;
-import com.gswf.financecontrol.repository.BusinessRepo;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.gswf.financecontrol.model.Business;
+import com.gswf.financecontrol.repository.BusinessRepo;
 
 @Service
 @Transactional
@@ -19,7 +19,7 @@ public class BusinessServiceImpl implements BusinessService {
   
     @Override
     public Business findBusinessById(Long id) {
-        return businessRepo.findById(id).get();        
+        return businessRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Business not found by id num: " + id));        
     }
   
     @Override
