@@ -39,6 +39,34 @@ Port 8080 already in use is an error that happens sometimes and the steps to sol
 1) take the process id (PID): ```lsof -n -i :8080 | grep LISTEN```
 2) kill it: ```kill -15```
 
+### POSTMAN
+
+I had a problem related to testing authentication using postman, but the post in stackoverflow helped me to understand and to set the token: (getting-unauthorized-error-full-authentication)[https://stackoverflow.com/a/73299650/11697526]:
+
+postman for testing auth jwt:
+
+1.Select the Header tab
+
+2.Click the button that says "hide auto-generated headers"
+
+3.Type "Authorization" (without quotes) under the "Key" column.
+
+4.Type "Bearer" under the "Value" column then paste the token. Ensure there is a space between "Bearer" and the "Token".
+
+5.Send the request
+
+*** Just one note about the sequence above is that which worked was using the tab Auth and seleting option Berear Token and pasting the token from signin.
+
+### Authentication
+
+It was followed the tutorial from the page (JWT Authentication example)[https://www.bezkoder.com/angular-10-spring-boot-jwt-auth/]. Some changes were needed in order to fix some errors that appeared when running the backend application. Changes applied were in the following files:
+
+- AuthController: the value in the tutorial used was different  (admin, mod) than the enum roles, so it happened within the switch in the signup endpoint, and changing it, the problem was solved;
+
+- WebSecurityConfig: unauthorizedHandler and jwtUtils methods had error when building and the error message suggested to create a bean for them in the auth configuration, so it was done putting the annotation and return, then worked fine and smoothly
+
+- There's no functionality to add roles to the database, so it has to be done directly in the database: ```insert into roles(name) values ('ROLE_ADMIN');```. In the future it will demand one specific functionality to treat this need.
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 
