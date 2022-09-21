@@ -11,7 +11,7 @@
 	<groupId>com.gswf</groupId>
 	<artifactId>financecontrol</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>financecontrol</name>
 	<description>Project for financial control in Spring Boot</description>
 	<properties>
