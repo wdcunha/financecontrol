@@ -61,11 +61,32 @@ postman for testing auth jwt:
 
 It was followed the tutorial from the page (JWT Authentication example)[https://www.bezkoder.com/angular-10-spring-boot-jwt-auth/]. Some changes were needed in order to fix some errors that appeared when running the backend application. Changes applied were in the following files:
 
-- AuthController: the value in the tutorial used was different  (admin, mod) than the enum roles, so it happened within the switch in the signup endpoint, and changing it, the problem was solved;
+- AuthController: the value in the tutorial used was different (admin, mod) than the enum roles, so it happened within the switch in the signup endpoint, and changing it, the problem was solved;
 
 - WebSecurityConfig: unauthorizedHandler and jwtUtils methods had error when building and the error message suggested to create a bean for them in the auth configuration, so it was done putting the annotation and return, then worked fine and smoothly
 
-- There's no functionality to add roles to the database, so it has to be done directly in the database: ```insert into roles(name) values ('ROLE_ADMIN');```. In the future it will demand one specific functionality to treat this need.
+- There's no functionality to add roles to the database, so it has to be done directly in the database: 
+```insert into roles(name) values ('ROLE_ADMIN');``` 
+
+In the future it will demand one specific functionality to treat this need.
+
+It is needed to pay attention about role when saving to database, because it is an array (Set<String>), so it needs be sent according to this data type or it will throw an error of deserealize.
+
+### Heroku
+
+Trying to test it online, I created app in Heroku and clearDb:
+
+```@ref:cleardb-acute-85232 completed provisioning, setting CLEARDB_DATABASE_URL. by user wdcunha@gmail.com```
+
+Commands:
+
+heroku logs --app=fem-finance-control
+heroku logs --app=fem-finance-control --tail
+heroku apps
+heroku info --app=fem-finance-control
+heroku run java -version --app=fem-finance-control
+heroku run -a fem-finance-control printenv
+heroku config --app=fem-finance-control
 
 ### Reference Documentation
 For further reference, please consider the following sections:
