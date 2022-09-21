@@ -88,6 +88,13 @@ heroku run java -version --app=fem-finance-control
 heroku run -a fem-finance-control printenv
 heroku config --app=fem-finance-control
 
+Some content that helped to configure:
+
+https://github.com/algaworks/videoaula-spring-api-rest-heroku
+https://www.youtube.com/watch?v=dusvP0CFisw
+
+
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 

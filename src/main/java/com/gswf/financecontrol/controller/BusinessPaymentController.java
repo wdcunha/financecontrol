@@ -41,7 +41,7 @@ public class BusinessPaymentController {
     @PostMapping(value = {"", "/save"})
     @ResponseStatus(code = HttpStatus.CREATED)
     public List<BusinessPayment> save(@RequestBody List<BusinessPayment> businessPayment) {
-    public List<BusinessPayment> save(List<BusinessPayment> businessPayment) {
+        System.out.println("dados recebidos: " + businessPayment);
         return businessPaymentService.saveAllBusinessPayment(businessPayment);
     }
 }
