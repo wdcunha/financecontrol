@@ -32,6 +32,42 @@ BusinessProduct API had a problem that was first to deserialize data from fronte
 
 ```insert into business_payment (payment_id, business_id, installment, payed, pay_date, amount) values (2, 1, 5, 0x00, '2022-07-20', 930.85);```
 
+### MySql issues
+I had problem with the password I forgot and the solution was just found in [stackOverFlow page](https://stackoverflow.com/questions/6474775/setting-the-mysql-root-user-password-on-os-x) and between many sugestions just the part that allowed to enter without password that really worked was just this one, and it was perfect after many tryings and the command to set a new password was taken in a post at the end of the page:
+
+$ /usr/local/opt/mysql/support-files/mysql.server stop
+$ /usr/local/opt/mysql/support-files/mysql.server start --skip-grant-tables
+mysql
+mysql> use mysql;
+UPDATE mysql.user SET authentication_string = '1234' WHERE User = 'root' AND Host = 'localhost';
+SELECT user,authentication_string,plugin,host FROM mysql.user; [update password](https://stackoverflow.com/questions/41645309/mysql-error-access-denied-for-user-rootlocalhost)
+
+The database was created in the [class 03](https://youtu.be/FHRYijYhJYA?list=PL8iIphQOyG-DHLpEx1TPItqJamy08fs1D). It is necessary to create the database manually before running Jboss that creates tables automatically. The commands used within the console opened by the ones above were:
+
+create database eventsapp;
+use eventsapp;
+describe events; `(show fields from the table)`
+select * from events;
+
+Other mySql commands:
+ mysql -u root -p  (used in terminal to access console with password)
+
+There was a problem to [connect with the database](https://serverfault.com/questions/586651/mysql-refuses-to-accept-remote-connections) and a solution was to add bind-address = 0.0.0.0 to your [mysqld] section of your /usr/local/etc/my.cnf and restart mysqld. 
+
+Utilizado [Materialize](https://materializecss.com/getting-started.html) pra formatar css no [vídeo 06](https://youtu.be/D97QpS7yJII?list=PL8iIphQOyG-DHLpEx1TPItqJamy08fs1D).
+
+In the [video 9](https://serverfault.com/questions/586651/mysql-refuses-to-accept-remote-connections) was created guest table that has relationship with Event table and was utilized annotation OneToMany(Event) and ManyToOne(Guest). 
+
+In the [video 10](https://youtu.be/b_6g4FHMm4s?list=PL8iIphQOyG-DHLpEx1TPItqJamy08fs1D) was created a route in controller to manage guests. The trick part here is that guest needs to be related to an event, so it is necessary to search by event first in the controller and after find the guest itself. A problem with the code used in the video happened and a guy posted a solution in the comments:
+
+from the video:
+```<a th:href="${(#mvc.url('EC#eventDetail').arg(0, event.cod)).build()}```
+sugestion in a comment:
+```a th:href="@{/{cod}(code=${event.cod})}```
+
+Field validations was done in the [video 12](https://youtu.be/3YQK87FJArw?list=PL8iIphQOyG-DHLpEx1TPItqJamy08fs1D) and used 2 parameters for redirecting and showing message. To show messages is needed to create a fragment in the html page, but created a new file in templates.
+
+
 ### TOMCAT PROBLEM
 
 Port 8080 already in use is an error that happens sometimes and the steps to solve are, accordingly to (article about it)[https://springhow.com/web-server-failed-to-start-port-8080-was-already-in-use/]:
@@ -92,8 +128,6 @@ Some content that helped to configure:
 
 https://github.com/algaworks/videoaula-spring-api-rest-heroku
 https://www.youtube.com/watch?v=dusvP0CFisw
-
-
 
 ### Reference Documentation
 For further reference, please consider the following sections:
