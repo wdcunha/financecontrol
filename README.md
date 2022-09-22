@@ -126,8 +126,21 @@ heroku config --app=fem-finance-control
 
 Some content that helped to configure:
 
-https://github.com/algaworks/videoaula-spring-api-rest-heroku
-https://www.youtube.com/watch?v=dusvP0CFisw
+[Algaworks](https://github.com/algaworks/videoaula-spring-api-rest-heroku)
+[Code Java](https://www.youtube.com/watch?v=dusvP0CFisw)
+[Create clearDb](https://www.youtube.com/watch?v=-pb84-WnUHs)
+[Feed clearDb](https://www.youtube.com/watch?v=TcadiISFM-4)
+
+
+Cleardb (MySql DB) address detailed: 
+
+mysql://b306a9cc54fb45:e46da07e@us-cdbr-east-06.cleardb.net/heroku_cd7f661aaceb37c?reconnect=true
+
+User: b306a9cc54fb45
+Pass: e46da07e
+Host: us-cdbr-east-06.cleardb.net
+Bd: heroku_cd7f661aaceb37c
+
 
 ### Reference Documentation
 For further reference, please consider the following sections:

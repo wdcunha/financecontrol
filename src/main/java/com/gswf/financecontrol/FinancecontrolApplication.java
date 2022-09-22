@@ -62,6 +62,13 @@ public class FinancecontrolApplication {
 			personTypesService.deleteAllPersonTypes();
 			paymentTypesService.deleteAllPaymentTypes();
 			businessTypesService.deleteAllBusinessTypes();
+			userRepository.deleteAll();
+			roleRepository.deleteAll();
+
+			Role userRole = new Role();
+			userRole.setName(ERole.ROLE_ADMIN);
+
+			roleRepository.save(userRole);
 
 			Role role = roleRepository.findByName(ERole.ROLE_ADMIN)
 			.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
