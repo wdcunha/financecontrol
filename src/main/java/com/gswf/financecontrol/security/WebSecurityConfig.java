@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.gswf.financecontrol.security.jwt.AuthEntryPointJwt;
 import com.gswf.financecontrol.security.jwt.AuthTokenFilter;
-import com.gswf.financecontrol.security.jwt.JwtUtils;
 import com.gswf.financecontrol.security.services.UserDetailsServiceImpl;
 
 @Configuration
@@ -26,10 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
 
-	@Bean
-	public AuthEntryPointJwt unauthorizedHandler() {
-		return new AuthEntryPointJwt();
-	}
+	@Autowired
+	private AuthEntryPointJwt unauthorizedHandler;
 
 	@Bean
 	public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -52,19 +49,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-	public JwtUtils jwtUtils() {
-		return new JwtUtils();
-	}
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
-			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler()).and()
+			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
 			.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-	}}
+	}
+}

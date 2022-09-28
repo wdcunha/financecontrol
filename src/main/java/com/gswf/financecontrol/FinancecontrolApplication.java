@@ -28,13 +28,18 @@ import com.gswf.financecontrol.service.PersonService;
 import com.gswf.financecontrol.service.PersonTypesService;
 import com.gswf.financecontrol.service.ProductService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class FinancecontrolApplication {
+
+	@Autowired
+	PasswordEncoder encoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FinancecontrolApplication.class, args);
@@ -80,7 +85,7 @@ public class FinancecontrolApplication {
 			user.setUsername("wgtcunha");
 			user.setRoles(roles);
 			user.setEmail("wdc@gmail.com");
-			user.setPassword("root1234");
+			user.setPassword(encoder.encode("root1234"));
 			userRepository.save(user);
 
 			Product product = new Product();

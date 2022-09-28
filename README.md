@@ -108,6 +108,8 @@ In the future it will demand one specific functionality to treat this need.
 
 It is needed to pay attention about role when saving to database, because it is an array (Set<String>), so it needs be sent according to this data type or it will throw an error of deserealize.
 
+One important thing is that password needs to be saved encoded. I was saving by feeding within initDataBAse CommandLineRunner at the beginning, but without encoding and it was causing error when trying to loggin.
+
 ### Heroku
 
 Trying to test it online, I created app in Heroku and clearDb:
@@ -123,6 +125,7 @@ heroku info --app=fem-finance-control
 heroku run java -version --app=fem-finance-control
 heroku run -a fem-finance-control printenv
 heroku config --app=fem-finance-control
+heroku config  --app=fem-finance-control | grep CLEARDB
 
 Some content that helped to configure:
 
@@ -130,7 +133,9 @@ Some content that helped to configure:
 [Code Java](https://www.youtube.com/watch?v=dusvP0CFisw)
 [Create clearDb](https://www.youtube.com/watch?v=-pb84-WnUHs)
 [Feed clearDb](https://www.youtube.com/watch?v=TcadiISFM-4)
+[Cleardb - heroku article](https://devcenter.heroku.com/articles/cleardb)
 
+Deploy was done by GitHub connection, which demands to deploy in the [dashboard page](https://dashboard.heroku.com/apps/fem-finance-control/deploy/github).
 
 Cleardb (MySql DB) address detailed: 
 
@@ -141,6 +146,11 @@ Pass: yyyyyy
 Host: us-cdbr-east-06.cleardb.net
 Bd: heroku_zzzzzzzzzzzz
 
+### Pendencies
+
+- Create logout functionality, because it is just on front-end which makes it weak because the endpoint remains logged in;
+
+- Implements OAth loggin to let users connect by social accounts;
 
 ### Reference Documentation
 For further reference, please consider the following sections:
